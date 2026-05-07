@@ -3,8 +3,7 @@ import { ChevronUp, ChevronDown } from "lucide-react"
 
 function AdvancedCounter() {
 
-
-    const [countList] = useState<number[]>(() => {
+    const [countList, setCountList] = useState<number[]>(() => {
         const savedCounList = localStorage.getItem("countList")
         console.log('Loaded counts from localStorage:', savedCounList)
         return savedCounList ? JSON.parse(savedCounList) : []
@@ -15,24 +14,30 @@ function AdvancedCounter() {
     }
     )
 
+    const [step, setStep] = useState(1)
+
     const [text, setText] = useState("Changes saved.")
 
     useEffect(() => {
         setTimeout(() => {
             console.log('Saving counts to localStorage:', countList)
             countList.push(count)
-             setText("Changes saved.")
+            setText("Changes saved.")
             localStorage.setItem("countList", JSON.stringify(countList))
-        }, 1000)
+        }, 500)
 
-       
+
         setText("Saving to localStorage...")
-        
+
+        setHistory(() => {
+            return (
+                countList.map((value, index) => (
+                    <p key={index}>{value}</p>
+                ))
+            )
+        })
+
     }, [count])
-
-    const [step, setStep] = useState(1)
-
-
 
     const decrement = () => setCount(prev => prev - step)
     const increment = () => setCount(prev => prev + step)
@@ -42,7 +47,11 @@ function AdvancedCounter() {
     const reset = () => {
         setCount(0)
         setStep(1)
+        setCountList([])
+        localStorage.removeItem("countList")
     }
+
+    const [history, setHistory] = useState()
 
     const handleKeyDown = (event: { key: string; preventDefault: () => void }) => {
         if (event.key === "ArrowUp") {
@@ -57,7 +66,6 @@ function AdvancedCounter() {
     return (
         <div style={{ border: "1px solid white", marginLeft: "300px", marginRight: "300px" }}>
             <h1>Counter</h1>
-            {/* <h2>Counter Count: {count}</h2> */}
 
             <div style={{ display: "flex", flexDirection: "row", padding: '20px', justifyContent: "center", alignItems: "center" }}>
                 <h3 style={{ paddingRight: "20px" }}>Value: </h3>
@@ -102,17 +110,17 @@ function AdvancedCounter() {
             <p>Count History:</p>
             <hr style={{ width: "300px" }} />
 
-            <div id='history'>
-                <p>{count}</p>
-                <span>--------------------------------</span>
-            </div>
-
+            {countList.map((value, index) => (
+                <div>
+                    <li key={index}>{value}</li>
+                    <span>{"-------------------------"}</span>
+                </div>
+            ))}
 
             <br /><p><small>Use ArrowUp to increment and ArrowDown to decrement.</small></p>
 
         </div>
     )
-
 
 }
 
