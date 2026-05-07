@@ -34,8 +34,8 @@ function AdvancedCounter() {
   }
 
   return (
-    <div>
-      <h1>Counter</h1><br />
+    <div style={{border: "1px solid white", marginLeft: "300px", marginRight: "300px"}}>
+      <h1>Counter</h1>
       {/* <h2>Counter Count: {count}</h2> */}
 
       <div style={ { display: "flex", flexDirection: "row", padding: '20px', justifyContent: "center", alignItems: "center" }}>
@@ -87,7 +87,7 @@ function AdvancedCounter() {
       </div>
 
 
-      <br /><br /><br /><p><small>Use ArrowUp to increment and ArrowDown to decrement.</small></p>
+      <br /><p><small>Use ArrowUp to increment and ArrowDown to decrement.</small></p>
 
     </div>
   )
