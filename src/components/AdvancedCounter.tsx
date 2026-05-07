@@ -112,7 +112,7 @@ function AdvancedCounter() {
 
             {countList.map((value, index) => (
                 <div>
-                    <li key={index}>{value}</li>
+                    <p key={index}>{value}</p>
                     <span>{"-------------------------"}</span>
                 </div>
             ))}
